@@ -10,10 +10,10 @@ const NavigationBar = (props) => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/auth">
+            <Nav.Link as={Link} to="/auth/signup">
               SignUp
             </Nav.Link>
-            <Nav.Link as={Link} to="/auth">
+            <Nav.Link as={Link} to="/auth/login">
               Login
             </Nav.Link>
           </Nav>

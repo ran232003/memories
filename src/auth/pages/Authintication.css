@@ -9,3 +9,12 @@
   margin-top: 5px;
   margin-bottom: 10px;
 }
+.head {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+  text-align: center;
+}
+button {
+  margin-top: 10px;
+}

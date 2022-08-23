@@ -11,7 +11,7 @@ function App() {
       <NavigationBar />
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/auth" element={<Authintication />} />
+        <Route path="/auth/:status" element={<Authintication />} />
       </Routes>
     </div>
   );

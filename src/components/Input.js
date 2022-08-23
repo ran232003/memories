@@ -3,20 +3,20 @@ import { Form, InputGroup } from "react-bootstrap";
 import { checkInput } from "../helperFunctions";
 import "./Input.css";
 function Input(props) {
-  const { type, placeHolder, lable, errorMessage } = props;
+  const { type, placeHolder, lable, errorMessage, valid, name } = props;
   const [error, setError] = useState({
     isValid: false,
     onText: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [input, setInput] = useState({
-    value: "",
-    valid: false,
+    [name]: "",
+    [valid]: false,
   });
   const [textType, setTextType] = useState(type);
   const handleIcon = () => {
     setShowPassword(!showPassword);
-    if (showPassword) {
+    if (!showPassword) {
       setTextType("text");
     } else {
       setTextType("password");
@@ -37,8 +37,9 @@ function Input(props) {
       });
     }
     setInput(() => {
-      return { value: value, valid: check };
+      return { [name]: value, [valid]: check };
     });
+    props.handleInput({ [name]: value, [valid]: check }, name, valid);
   };
   const onInput = () => {
     if (input.valid === false) {
@@ -52,7 +53,7 @@ function Input(props) {
     }
   };
   let iconClass =
-    showPassword === true ? "fas fa-eye-slash icon" : "fas fa-eye icon";
+    showPassword === false ? "fas fa-eye-slash icon" : "fas fa-eye icon";
 
   return (
     <div>
