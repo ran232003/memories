@@ -3,13 +3,16 @@ const bodyParser = require("body-parser");
 const app = express();
 const User = require("../models/user-schema");
 app.use(bodyParser.json());
-
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const addUser = async (req, res, next) => {
   const user = req.body;
   console.log(user);
   try {
     const checkUser = await User.findOne({ email: user.email });
     if (checkUser === null) {
+      let hashPassword = await bcrypt.hash(user.password, 12);
+      user["password"] = hashPassword;
       const newUser = new User(user);
       await newUser.save();
       return res.json({ message: "user added" });

@@ -42,7 +42,8 @@ function Input(props) {
     props.handleInput({ [name]: value, [valid]: check }, name, valid);
   };
   const onInput = () => {
-    if (input.valid === false) {
+    console.log(input[valid]);
+    if (input[valid] === false) {
       setError(() => {
         return { isValid: true, onText: true };
       });

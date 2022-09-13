@@ -1,11 +1,19 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Headline from "../../components/Headline";
 import Input from "../../components/Input";
 import "./Authintication.css";
-import { useParams } from "react-router-dom";
-import { Button } from "react-bootstrap";
+import { useNavigate, useParams } from "react-router-dom";
+import { Button, Form } from "react-bootstrap";
 import { signup } from "../../api/apiCalls";
+import { GoogleLogin, GoogleLogout } from "react-google-login";
+import GoogleSign from "./GoogleSign";
+
+//client id: 168119533642-j168btelnpc9q54ouqtff55qrutuarhv.apps.googleusercontent.com
+//secret: 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
 const Authintication = () => {
+  let test =
+    "168119533642-j168btelnpc9q54ouqtff55qrutuarhv.apps.googleusercontent.com";
+  const navigate = useNavigate();
   const [inputs, setInputs] = useState({
     name: "",
     nameValid: false,
@@ -14,11 +22,19 @@ const Authintication = () => {
     email: "",
     emailValid: false,
   });
+
   let { status } = useParams();
   const handleInput = (input, name, valid) => {
     setInputs(() => {
       return { ...inputs, [name]: input[name], [valid]: input[valid] };
     });
+  };
+  const navigateTo = () => {
+    if (status === "login") {
+      navigate("/auth/signup");
+    } else if (status === "signup") {
+      navigate("/auth/login");
+    }
   };
   const submitInput = () => {
     let user = {
@@ -28,6 +44,24 @@ const Authintication = () => {
     };
     let response = signup(user);
   };
+  const signWithGoogle = (input) => {};
+  let authStatus =
+    status === "login" ? (
+      <p className="myText">
+        DON'T HAVE AN ACCOUNT?
+        <a onClick={navigateTo} className="myLink">
+          SIGNUP
+        </a>
+      </p>
+    ) : (
+      <p className="myText">
+        ALREADY HAVE AN ACCOUNT?
+        <a onClick={navigateTo} className="myLink">
+          LOGIN
+        </a>
+      </p>
+    );
+
   return (
     <div>
       <div className="head">
@@ -64,7 +98,14 @@ const Authintication = () => {
           type="password"
           errorMessage="password is Mandatory Field"
         />
-        <Button onClick={submitInput}>Submit</Button>
+        <div className="flexButtons">
+          <Button onClick={submitInput}>Submit</Button>
+          <GoogleSign signWithGoogle={signWithGoogle} />
+        </div>
+
+        <div className="checkLable">
+          <Form.Label>{authStatus}</Form.Label>
+        </div>
       </div>
     </div>
   );

@@ -18,3 +18,18 @@
 button {
   margin-top: 10px;
 }
+.myLink {
+  cursor: pointer;
+  margin-left: 10px;
+}
+.myText {
+  margin-left: 10px;
+  margin-top: 15px;
+}
+.checkLable {
+  margin-top: 20px;
+}
+.flexButtons {
+  display: flex;
+  justify-content: space-between;
+}
