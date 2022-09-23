@@ -1,0 +1,12 @@
+.cont {
+  border-color: black;
+  border-style: solid;
+  width: 100%;
+}
+a {
+  margin-left: 10px;
+}
+button {
+  margin-right: 10px;
+  margin-left: auto;
+}

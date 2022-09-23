@@ -11,8 +11,8 @@ const GoogleSign = (props) => {
   let test =
     "168119533642-j168btelnpc9q54ouqtff55qrutuarhv.apps.googleusercontent.com";
   const successGoogle = async (responseGoogle) => {
-    console.log(responseGoogle);
-    console.log(responseGoogle.wt.Ad);
+    // console.log(responseGoogle);
+    // console.log(responseGoogle.wt.Ad);
     let user = {
       email: responseGoogle.profileObj.email,
       id: responseGoogle.profileObj.googleId,

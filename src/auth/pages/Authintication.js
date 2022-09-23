@@ -7,6 +7,7 @@ import { Button, Form } from "react-bootstrap";
 import { signup } from "../../api/apiCalls";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import GoogleSign from "./GoogleSign";
+import MyToast from "../../components/MyToast";
 
 //client id: 168119533642-j168btelnpc9q54ouqtff55qrutuarhv.apps.googleusercontent.com
 //secret: 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
@@ -22,6 +23,11 @@ const Authintication = () => {
     email: "",
     emailValid: false,
   });
+  const [alertObject, setAlert] = useState({
+    lable: "",
+    showAlert: false,
+    cssClass: "",
+  });
 
   let { status } = useParams();
   const handleInput = (input, name, valid) => {
@@ -36,13 +42,27 @@ const Authintication = () => {
       navigate("/auth/login");
     }
   };
-  const submitInput = () => {
+  const submitInput = async () => {
     let user = {
       name: inputs.name,
       password: inputs.password,
       email: inputs.email,
     };
-    let response = signup(user);
+    let data = await signup(user);
+    console.log(data);
+
+    if (data.status === "ok") {
+      setAlert(() => {
+        return { lable: data.message, cssClass: "success", showAlert: true };
+      });
+    } else {
+      setAlert(() => {
+        return { lable: data.message, cssClass: "danger", showAlert: true };
+      });
+    }
+  };
+  const handleNavigate = () => {
+    navigate("/home");
   };
   const signWithGoogle = (input) => {};
   let authStatus =
@@ -105,6 +125,14 @@ const Authintication = () => {
 
         <div className="checkLable">
           <Form.Label>{authStatus}</Form.Label>
+        </div>
+
+        <div>
+          <MyToast
+            handleNavigate={handleNavigate}
+            showObject={alertObject}
+            className="centerAlert"
+          />
         </div>
       </div>
     </div>

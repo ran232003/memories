@@ -6,6 +6,9 @@ const AuthSlice = createSlice({
     setUser(state, action) {
       state.user = action.payload;
     },
+    removeUser(state) {
+      state.user = null;
+    },
   },
 });
 

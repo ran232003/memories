@@ -10,10 +10,16 @@ import { getUser } from "./storage/storageFunctions";
 import { useDispatch } from "react-redux";
 import { authAction } from "./store/authSlice";
 import HomePage from "./homePage/HomePage";
+import PrivateRoutes from "./components/PrivateRoutes";
+import AddPost from "./addPosts/pages/AddPost";
 
 function App() {
   const dispatch = useDispatch();
+  const user = getUser();
+  console.log(user);
+  dispatch(authAction.setUser(user));
   useEffect(() => {
+    console.log("use e");
     const user = getUser();
     console.log(user);
     dispatch(authAction.setUser(user));
@@ -33,7 +39,10 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/auth/:status" element={<Authintication />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route element={<PrivateRoutes />}>
+          <Route path="/home" element={<HomePage />} />
+          <Route path="/add-post" exact element={<AddPost />} />
+        </Route>
       </Routes>
     </div>
   );

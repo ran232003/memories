@@ -7,5 +7,6 @@ export const signup = async (user) => {
     body: JSON.stringify(user),
   });
   let data = await response.json();
+  console.log(data);
   return data;
 };
