@@ -3,7 +3,8 @@ import { Form, InputGroup } from "react-bootstrap";
 import { checkInput } from "../helperFunctions";
 import "./Input.css";
 function Input(props) {
-  const { type, placeHolder, lable, errorMessage, valid, name } = props;
+  const { type, placeHolder, lable, errorMessage, valid, name, inputType } =
+    props;
   const [error, setError] = useState({
     isValid: false,
     onText: false,
@@ -68,6 +69,7 @@ function Input(props) {
             value={input.value}
             onBlur={onInput}
             isInvalid={error.isValid}
+            as={inputType}
           />
 
           {type === "password" ? (

@@ -1,17 +1,22 @@
 import React, { useEffect, useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
-
+import "./MyToast.css";
 const MyToast = (props) => {
   let showObject = props.showObject;
   const [show, setShow] = useState(showObject);
   useEffect(() => {
     setShow(showObject);
   }, [showObject]);
-  console.log(showObject, "toast");
   return (
-    <div className="App">
-      <ToastContainer className="toast-container" toastClassName="dark-toast">
+    <div className="test">
+      <ToastContainer
+        color="red"
+        className="toast-container test"
+        toastClassName="dark-toast"
+      >
         <Toast
+          className="myToast"
+          color="red"
           show={show.showAlert}
           onClose={() => {
             setShow(() => {
@@ -22,7 +27,7 @@ const MyToast = (props) => {
               props.handleNavigate();
             }
           }}
-          delay={1100}
+          delay={2100}
           autohide
         >
           <Toast.Body className={showObject.cssClass} variant="Success">

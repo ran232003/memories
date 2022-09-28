@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { removeUser } from "../storage/storageFunctions";
 import { authAction } from "../store/authSlice";
-
+import "./Modal.css";
 const MyModal = (props) => {
   const { show } = props;
   const navigate = useNavigate();

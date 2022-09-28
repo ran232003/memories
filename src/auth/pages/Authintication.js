@@ -64,7 +64,10 @@ const Authintication = () => {
   const handleNavigate = () => {
     navigate("/home");
   };
-  const signWithGoogle = (input) => {};
+
+  const signWithGoogle = (alert) => {
+    setAlert(alert);
+  };
   let authStatus =
     status === "login" ? (
       <p className="myText">
@@ -81,7 +84,6 @@ const Authintication = () => {
         </a>
       </p>
     );
-
   return (
     <div>
       <div className="head">
@@ -97,6 +99,7 @@ const Authintication = () => {
             placeHolder="Enter Name"
             type="text"
             errorMessage="Name is Mandatory Field"
+            inputType="input"
           />
         )}
 
@@ -119,15 +122,17 @@ const Authintication = () => {
           errorMessage="password is Mandatory Field"
         />
         <div className="flexButtons">
-          <Button onClick={submitInput}>Submit</Button>
-          <GoogleSign signWithGoogle={signWithGoogle} />
+          <Button className="myButton" onClick={submitInput}>
+            Submit
+          </Button>
+          <GoogleSign status={status} signWithGoogle={signWithGoogle} />
         </div>
 
         <div className="checkLable">
           <Form.Label>{authStatus}</Form.Label>
         </div>
 
-        <div>
+        <div className="checkBorder">
           <MyToast
             handleNavigate={handleNavigate}
             showObject={alertObject}

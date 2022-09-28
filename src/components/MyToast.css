@@ -1,0 +1,10 @@
+.test {
+  margin: auto;
+  width: 50%;
+  padding: 10px;
+}
+.myToast {
+  background-color: #ee2400;
+  color: black;
+  font-weight: bold;
+}

@@ -1,22 +1,23 @@
 const mongoose = require("mongoose");
 
 memorySchema = mongoose.Schema({
-  name: {
+  title: {
     type: String,
     trim: true,
     required: true,
   },
-  password: {
+  desc: {
     type: String,
     trim: true,
     required: true,
   },
-  email: {
+  user: {
     type: String,
     trim: true,
-    unique: true,
     required: true,
   },
+  likes: Number,
+  image: String,
 });
 
 const Memory = mongoose.model("Memory", memorySchema);

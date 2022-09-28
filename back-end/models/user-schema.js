@@ -9,7 +9,6 @@ userSchema = mongoose.Schema({
   password: {
     type: String,
     trim: true,
-    required: true,
   },
   email: {
     type: String,
@@ -17,6 +16,7 @@ userSchema = mongoose.Schema({
     unique: true,
     required: true,
   },
+  likes: [],
 });
 
 const User = mongoose.model("User", userSchema);

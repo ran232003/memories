@@ -12,6 +12,7 @@ import { authAction } from "./store/authSlice";
 import HomePage from "./homePage/HomePage";
 import PrivateRoutes from "./components/PrivateRoutes";
 import AddPost from "./addPosts/pages/AddPost";
+import PageNotFound from "./pageNotFound/PageNotFound";
 
 function App() {
   const dispatch = useDispatch();
@@ -43,6 +44,7 @@ function App() {
           <Route path="/home" element={<HomePage />} />
           <Route path="/add-post" exact element={<AddPost />} />
         </Route>
+        <Route path="*" element={<PageNotFound />} />
       </Routes>
     </div>
   );

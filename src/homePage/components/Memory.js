@@ -1,6 +1,7 @@
 import React from "react";
 import { Button, Card } from "react-bootstrap";
 import "./Memory.css";
+import { AiFillLike, AiFillDelete } from "react-icons/ai";
 const Memory = (props) => {
   const { title, image, desc } = props;
   return (
@@ -11,7 +12,15 @@ const Memory = (props) => {
         <Card.Body>
           <Card.Title>{title}</Card.Title>
           <Card.Text>{desc}</Card.Text>
-          <Button variant="primary">Go somewhere</Button>
+          <div className="footer">
+            <div className="footer left">
+              <AiFillLike className="pointer" size={30} />
+              <p>LIKE </p>
+            </div>
+            <div className="footer right">
+              <AiFillDelete className="pointer" size={30} /> <p>DELETE </p>
+            </div>
+          </div>
         </Card.Body>
       </Card>
     </div>
