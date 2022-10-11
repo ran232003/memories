@@ -8,10 +8,15 @@ import { signup } from "../../api/apiCalls";
 import { GoogleLogin, GoogleLogout } from "react-google-login";
 import GoogleSign from "./GoogleSign";
 import MyToast from "../../components/MyToast";
+import { setUser } from "../../storage/storageFunctions";
+import { useDispatch } from "react-redux";
+import { authAction } from "../../store/authSlice";
 
 //client id: 168119533642-j168btelnpc9q54ouqtff55qrutuarhv.apps.googleusercontent.com
 //secret: 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
 const Authintication = () => {
+  const [toast, setToast] = useState({ show: false, bg: "", lable: "" });
+  const dispatch = useDispatch();
   let test =
     "168119533642-j168btelnpc9q54ouqtff55qrutuarhv.apps.googleusercontent.com";
   const navigate = useNavigate();
@@ -42,23 +47,31 @@ const Authintication = () => {
       navigate("/auth/login");
     }
   };
+  console.log(status);
   const submitInput = async () => {
     let user = {
       name: inputs.name,
       password: inputs.password,
       email: inputs.email,
     };
-    let data = await signup(user);
+    let data = await signup(inputs, status);
     console.log(data);
 
     if (data.status === "ok") {
-      setAlert(() => {
-        return { lable: data.message, cssClass: "success", showAlert: true };
+      setUser(data.user);
+      console.log("in if success");
+      dispatch(authAction.setUser(data.user));
+      // navigate("/home");
+      setToast({
+        show: true,
+        bg: "success",
+        lable: "Welcome To Memories!",
       });
+      setTimeout(() => {
+        navigate("/home");
+      }, 1600);
     } else {
-      setAlert(() => {
-        return { lable: data.message, cssClass: "danger", showAlert: true };
-      });
+      setToast({ show: true, bg: "danger", lable: "Fail To Login" });
     }
   };
   const handleNavigate = () => {
@@ -131,14 +144,8 @@ const Authintication = () => {
         <div className="checkLable">
           <Form.Label>{authStatus}</Form.Label>
         </div>
-
-        <div className="checkBorder">
-          <MyToast
-            handleNavigate={handleNavigate}
-            showObject={alertObject}
-            className="centerAlert"
-          />
-        </div>
+        <MyToast toast={toast} />
+        <div className="checkBorder"></div>
       </div>
     </div>
   );

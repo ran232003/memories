@@ -10,7 +10,10 @@ mongoose.connect(
 const cors = require("cors");
 app.use(cors());
 const userRouter = require("./routes/user-routes");
+const memoryRouter = require("./routes/memory-routes");
+app.use("/uploads/images", express.static(__dirname + "/uploads/images"));
 app.use("/api/user", userRouter);
+app.use("/api/memory", memoryRouter);
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

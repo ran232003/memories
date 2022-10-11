@@ -8,7 +8,7 @@ const {
 express = require("express");
 const router = express.Router();
 
-router.post("/newUser", addUser);
+router.post("/signup", addUser);
 router.post("/login", login);
 router.post("/googleLogin", googleLogin);
 router.post("/googleSignup", googleSignup);

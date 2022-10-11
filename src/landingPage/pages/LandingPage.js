@@ -9,7 +9,7 @@ const LandingPage = () => {
     return state.auth.user;
   });
   const navigate = useNavigate();
-  console.log(user);
+
   const handleNavStart = () => {
     if (user) {
       navigate("/home");

@@ -17,12 +17,11 @@ import PageNotFound from "./pageNotFound/PageNotFound";
 function App() {
   const dispatch = useDispatch();
   const user = getUser();
-  console.log(user);
+
   dispatch(authAction.setUser(user));
   useEffect(() => {
-    console.log("use e");
     const user = getUser();
-    console.log(user);
+
     dispatch(authAction.setUser(user));
     function start() {
       gapi.client.init({

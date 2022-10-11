@@ -11,12 +11,12 @@ memorySchema = mongoose.Schema({
     trim: true,
     required: true,
   },
-  user: {
+  userId: {
     type: String,
     trim: true,
     required: true,
   },
-  likes: Number,
+  likes: [],
   image: String,
 });
 

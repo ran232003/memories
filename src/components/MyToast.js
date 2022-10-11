@@ -2,39 +2,19 @@ import React, { useEffect, useState } from "react";
 import { Toast, ToastContainer } from "react-bootstrap";
 import "./MyToast.css";
 const MyToast = (props) => {
-  let showObject = props.showObject;
-  const [show, setShow] = useState(showObject);
+  let { toast } = props;
+  const [show, setShow] = useState(toast);
   useEffect(() => {
-    setShow(showObject);
-  }, [showObject]);
+    setShow(toast);
+    setTimeout(() => {
+      setShow({ show: false, bg: "null" });
+    }, 3000);
+  }, [toast]);
   return (
     <div className="test">
-      <ToastContainer
-        color="red"
-        className="toast-container test"
-        toastClassName="dark-toast"
-      >
-        <Toast
-          className="myToast"
-          color="red"
-          show={show.showAlert}
-          onClose={() => {
-            setShow(() => {
-              props.showObject.showAlert = false;
-              return { ...show, showAlert: false };
-            });
-            if (showObject.cssClass === "success") {
-              props.handleNavigate();
-            }
-          }}
-          delay={2100}
-          autohide
-        >
-          <Toast.Body className={showObject.cssClass} variant="Success">
-            {showObject.lable} <br />
-          </Toast.Body>
-        </Toast>
-      </ToastContainer>
+      <Toast bg={show.bg} show={show.show}>
+        <Toast.Body className="toastBody">{show.lable}</Toast.Body>
+      </Toast>
     </div>
   );
 };

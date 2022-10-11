@@ -1,14 +1,31 @@
 .memory {
   margin-left: 10px;
   margin-top: 10px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
 }
 .footer {
   display: flex;
+  background-color: #add8e6;
 }
 .left {
-  margin-left: 0px;
+  margin-left: 10px;
   margin-right: auto;
 }
 p {
   margin-top: 5px;
+}
+.cardImage {
+  max-height: 260px;
+}
+.cardBody {
+  display: inline-block;
+  min-height: 200px;
+  background-color: #add8e6;
+  width: 100%;
+}
+.cardCont {
+  display: inline-block;
+}
+.delete {
+  margin-right: 10px;
 }

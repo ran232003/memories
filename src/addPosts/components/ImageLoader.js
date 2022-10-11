@@ -2,14 +2,12 @@ import React, { useState } from "react";
 import { Form } from "react-bootstrap";
 
 const ImageLoader = (props) => {
+  const { name, valid } = props;
   const [file, setFile] = useState();
   const handleSubmission = () => {};
   const changeHandler = (event) => {
-    console.log(event.target.files[0]);
-    console.log(event.target.files);
-    let obj = { valid: true, value: event.target.files[0] };
-    console.log(obj);
-    props.handleInput(obj, props.fieldName);
+    let obj = { [valid]: true, [name]: event.target.files[0] };
+    props.handleInput(obj, name, valid);
   };
 
   return (

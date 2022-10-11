@@ -10,8 +10,11 @@ const client = new OAuth2Client(
   "168119533642-j168btelnpc9q54ouqtff55qrutuarhv.apps.googleusercontent.com"
 );
 const addUser = async (req, res, next) => {
-  const user = req.body;
-  console.log(user, "before try");
+  const user = {
+    email: req.body.email,
+    name: req.body.name,
+    password: req.body.password,
+  };
   try {
     const checkUser = await User.findOne({ email: user.email });
     if (checkUser === null) {
@@ -23,7 +26,6 @@ const addUser = async (req, res, next) => {
       await newUser.save();
 
       let returnUser = { id: newUser["_id"], email: newUser["email"] };
-      console.log(returnUser);
       token = jwt.sign(
         { id: returnUser.id, email: returnUser.email },
         "my-secret",
@@ -46,19 +48,52 @@ const addUser = async (req, res, next) => {
     return res.json({ status: "fail", message: "error" });
   }
 };
-
+function compareAsync(userPassword, dbPassword) {
+  return new Promise(function (resolve, reject) {
+    bcrypt.compare(userPassword, dbPassword, function (err, res) {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(res);
+      }
+    });
+  });
+}
 const login = async (req, res, next) => {
-  const user = req.body;
+  let user = {
+    email: req.body.email,
+    password: req.body.password,
+  };
   console.log(user);
   const checkUser = await User.findOne({
     email: user.email,
-    password: user.password,
   });
-  console.log(checkUser);
+  console.log(checkUser, "check");
   if (checkUser === null) {
     return res.json({ status: "fail", message: "User Not Exist" });
   } else {
-    return res.json({ status: "ok", message: "User Exist", user: checkUser });
+    let result = await compareAsync(user.password, checkUser.password);
+    if (result) {
+      token = jwt.sign(
+        { id: checkUser._id, email: checkUser.email },
+        "my-secret",
+        {
+          expiresIn: "1d",
+        }
+      );
+      let returnUser = {
+        id: checkUser["_id"],
+        email: checkUser["email"],
+        token: token,
+      };
+      return res.json({
+        status: "ok",
+        message: "User Exist",
+        user: returnUser,
+      });
+    } else {
+      return res.json({ status: "fail", message: "Wrong Password Or Email" });
+    }
   }
 };
 const googleLogin = async (req, res, next) => {

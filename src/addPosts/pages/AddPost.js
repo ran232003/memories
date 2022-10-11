@@ -1,10 +1,21 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
+import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { addPost } from "../../api/apiCalls";
 import Headline from "../../components/Headline";
 import Input from "../../components/Input";
+import MyToast from "../../components/MyToast";
+import { memoryAction } from "../../store/memorySlice";
 import ImageLoader from "../components/ImageLoader";
 
 const AddPost = () => {
+  const dispatch = useDispatch();
+  const user = useSelector((state) => {
+    return state.auth.user;
+  });
+  const navigate = useNavigate();
+  const [toast, setToast] = useState({ show: false, bg: "", lable: "" });
   const [inputs, setInputs] = useState({
     title: "",
     titleValid: false,
@@ -14,8 +25,27 @@ const AddPost = () => {
     imageValid: false,
     likes: 0,
   });
-  const handleInput = () => {};
-  const submitInput = () => {};
+  const handleInput = (input, name, valid) => {
+    setInputs(() => {
+      return { ...inputs, [name]: input[name], [valid]: input[valid] };
+    });
+  };
+  const submitInput = async () => {
+    const data = await addPost(inputs, user);
+    if (data.status === "ok") {
+      setToast({
+        show: true,
+        bg: "success",
+        lable: "Adding Post Was Successful",
+      });
+      dispatch(memoryAction.addPost(data.memory));
+      setTimeout(() => {
+        navigate("/home");
+      }, 1600);
+    } else {
+      setToast({ show: true, bg: "danger", lable: "Fail To Add Post" });
+    }
+  };
   return (
     <div>
       <div className="head">
@@ -42,9 +72,14 @@ const AddPost = () => {
           errorMessage="Description is Mandatory Field"
         />
         {/* <input accept="image/*" id="raised-button-file" type="file" /> */}
-        <ImageLoader />
+        <ImageLoader
+          handleInput={handleInput}
+          name="image"
+          valid="imageValid"
+        />
         <Button onClick={submitInput}>Submit</Button>
       </div>
+      <MyToast toast={toast} />
     </div>
   );
 };
