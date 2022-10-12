@@ -1,30 +1,61 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Button, Card } from "react-bootstrap";
 import "./Memory.css";
-import { AiFillLike, AiFillDelete, AiFillDislike } from "react-icons/ai";
+import {
+  AiOutlineLike,
+  AiFillDelete,
+  AiFillDislike,
+  AiFillEdit,
+} from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { memoryAction } from "../../store/memorySlice";
-import { deleteMemory } from "../../api/apiCalls";
+import { deleteMemory, LikeMemory } from "../../api/apiCalls";
+import { IconContext } from "react-icons";
+import { useNavigate } from "react-router-dom";
+
 const Memory = (props) => {
-  const { title, image, desc, id, likes } = props;
+  const navigate = useNavigate();
+  const { title, image, desc, id, likes, userId, likesArray } = props;
   const user = useSelector((state) => {
     return state.auth.user;
   });
   const dispatch = useDispatch();
-  const like = () => {
-    console.log("like", id, user._id);
-    let payload = { memoryId: id, userId: user._id };
-    console.log(payload);
+  const like = async () => {
+    console.log("like", id, user.id);
+    let payload = { memoryId: id, userId: user.id };
 
-    dispatch(memoryAction.like(payload));
+    const data = await LikeMemory(payload);
+    console.log("data.status", data.status);
+    if (data.status === "ok") {
+      console.log("before", data.memory);
+      dispatch(memoryAction.like(data.memory));
+    }
   };
   const handleDelete = async () => {
     let payload = { memoryId: id, userId: user._id };
     dispatch(memoryAction.deletePost(payload));
-    console.log("delete");
 
     const data = await deleteMemory(payload);
+    if (data.status === "ok") {
+      console.log("before", data.memory);
+      dispatch(memoryAction.deletePost(payload));
+    }
   };
+  let style;
+  const checkLike = () => {
+    likesArray.forEach((element) => {
+      if (element === user.id) {
+        style = { color: "blue" };
+      }
+    });
+  };
+  checkLike();
+  const editMemory = () => {
+    navigate(`/edit/:${title}`, {
+      state: { title, image, desc, id },
+    });
+  };
+
   return (
     <div className="memory">
       {" "}
@@ -35,18 +66,31 @@ const Memory = (props) => {
           <Card.Text>{desc.substring(0, 200)}... </Card.Text>
         </Card.Body>
         <div className="footer">
-          <div className="footer left">
-            <AiFillLike className="pointer" size={30} onClick={like} />
+          <div className="left">
+            <AiOutlineLike
+              className="pointer likeIcon"
+              size={30}
+              style={style}
+              onClick={like}
+            />
             <p>LIKE {likes} </p>
           </div>
-          <div className="footer right">
-            <AiFillDelete
-              className="pointer"
-              size={30}
-              onClick={handleDelete}
-            />{" "}
-            <p className="delete">DELETE </p>
-          </div>
+          {userId === user.id ? (
+            <div className="centerIcon">
+              <AiFillEdit size={30} className="pointer" onClick={editMemory} />{" "}
+              <p className="delete">EDIT </p>{" "}
+            </div>
+          ) : null}
+          {userId === user.id ? (
+            <div className="right">
+              <AiFillDelete
+                className="pointer"
+                size={30}
+                onClick={handleDelete}
+              />{" "}
+              <p className="delete">DELETE </p>
+            </div>
+          ) : null}
         </div>
       </Card>
     </div>

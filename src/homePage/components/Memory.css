@@ -2,14 +2,21 @@
   margin-left: 10px;
   margin-top: 10px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
+  margin-bottom: 10px;
 }
 .footer {
   display: flex;
   background-color: #add8e6;
+  justify-content: space-between;
 }
 .left {
-  margin-left: 10px;
-  margin-right: auto;
+  display: flex;
+}
+.right {
+  display: flex;
+}
+.centerIcon {
+  display: flex;
 }
 p {
   margin-top: 5px;
@@ -28,4 +35,7 @@ p {
 }
 .delete {
   margin-right: 10px;
+}
+.flex-icons {
+  display: flex;
 }

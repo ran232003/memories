@@ -41,7 +41,7 @@ export const addPost = async (post, user) => {
   formData.append("title", post.title);
   formData.append("desc", post.desc);
   formData.append("file", post.image);
-  formData.append("userId", user._id);
+  formData.append("userId", user.id);
   const response = await fetch("http://localhost:5000/api/memory/addPost", {
     method: "POST",
     body: formData,
@@ -72,6 +72,18 @@ export const deleteMemory = async (memoryId) => {
       body: JSON.stringify(memoryId),
     }
   );
+  let data = await response.json();
+  console.log("response", data);
+  return data;
+};
+export const LikeMemory = async (payload) => {
+  const response = await fetch("http://localhost:5000/api/memory/LikeMemory", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(payload),
+  });
   let data = await response.json();
   console.log("response", data);
   return data;

@@ -24,31 +24,41 @@ const MemorySlice = createSlice({
       state.memories = newMemories;
     },
     like(state, action) {
-      const { memoryId, userId } = action.payload;
-      const memoryFind = state.memories.find((mem, index) => {
-        if (mem._id == memoryId) {
-          mem["index"] = index;
-          return mem;
+      // const { memoryId, userId } = action.payload;
+      // const memoryFind = state.memories.find((mem, index) => {
+      //   if (mem._id == memoryId) {
+      //     mem["index"] = index;
+      //     return mem;
+      //   }
+      // });
+      // console.log("memObject", memoryFind);
+      // let memObject = current(memoryFind);
+      // console.log(memObject);
+      // let user = memObject.likes.find((like) => {
+      //   return like == userId;
+      // });
+
+      // if (user) {
+      //   //remove like
+
+      //   state.memories[memObject.index].likes = state.memories[
+      //     memObject.index
+      //   ].likes.filter((user) => {
+      //     return user != userId;
+      //   });
+      // } else {
+      //   state.memories[memoryFind.index].likes.push(userId);
+      // }
+      state.memories.map((mem, index) => {
+        console.log(
+          mem._id === action.payload._id,
+          mem._id,
+          action.payload._id
+        );
+        if (mem._id === action.payload._id) {
+          state.memories[index] = action.payload;
         }
       });
-      console.log("memObject", memoryFind);
-      let memObject = current(memoryFind);
-      console.log(memObject);
-      let user = memObject.likes.find((like) => {
-        return like == userId;
-      });
-
-      if (user) {
-        //remove like
-
-        state.memories[memObject.index].likes = state.memories[
-          memObject.index
-        ].likes.filter((user) => {
-          return user != userId;
-        });
-      } else {
-        state.memories[memoryFind.index].likes.push(userId);
-      }
     },
   },
 });

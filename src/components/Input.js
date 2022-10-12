@@ -3,16 +3,25 @@ import { Form, InputGroup } from "react-bootstrap";
 import { checkInput } from "../helperFunctions";
 import "./Input.css";
 function Input(props) {
-  const { type, placeHolder, lable, errorMessage, valid, name, inputType } =
-    props;
+  const {
+    type,
+    placeHolder,
+    lable,
+    errorMessage,
+    valid,
+    name,
+    inputType,
+    initValid,
+    initValue,
+  } = props;
   const [error, setError] = useState({
     isValid: false,
     onText: false,
   });
   const [showPassword, setShowPassword] = useState(false);
   const [input, setInput] = useState({
-    [name]: "",
-    [valid]: false,
+    [name]: initValue,
+    [valid]: initValid,
   });
   const [textType, setTextType] = useState(type);
   const handleIcon = () => {
@@ -56,7 +65,6 @@ function Input(props) {
   };
   let iconClass =
     showPassword === false ? "fas fa-eye-slash icon" : "fas fa-eye icon";
-
   return (
     <div>
       <Form>
@@ -66,7 +74,7 @@ function Input(props) {
             onChange={handleChange}
             type={textType}
             placeholder={placeHolder}
-            value={input.value}
+            value={input[name]}
             onBlur={onInput}
             isInvalid={error.isValid}
             as={inputType}

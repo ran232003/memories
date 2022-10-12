@@ -21,6 +21,8 @@ const MemoryList = (props) => {
             title={mem.title}
             image={mem.image}
             likes={mem.likes.length}
+            userId={mem.userId}
+            likesArray={mem.likes}
           />
         );
       })}

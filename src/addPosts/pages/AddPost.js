@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { addPost } from "../../api/apiCalls";
 import Headline from "../../components/Headline";
 import Input from "../../components/Input";
 import MyToast from "../../components/MyToast";
 import { memoryAction } from "../../store/memorySlice";
 import ImageLoader from "../components/ImageLoader";
+import "./AddPost.css";
 
 const AddPost = () => {
   const dispatch = useDispatch();
@@ -15,16 +16,18 @@ const AddPost = () => {
     return state.auth.user;
   });
   const navigate = useNavigate();
+  const { state } = useLocation();
   const [toast, setToast] = useState({ show: false, bg: "", lable: "" });
   const [inputs, setInputs] = useState({
-    title: "",
-    titleValid: false,
-    desc: "",
-    descValid: false,
-    image: "",
-    imageValid: false,
+    title: state ? state.title : "",
+    titleValid: state ? true : false,
+    desc: state ? state.desc : "",
+    descValid: state ? true : false,
+    image: state ? state.image : "",
+    imageValid: state ? true : false,
     likes: 0,
   });
+  console.log(inputs, "inputs");
   const handleInput = (input, name, valid) => {
     setInputs(() => {
       return { ...inputs, [name]: input[name], [valid]: input[valid] };
@@ -54,6 +57,8 @@ const AddPost = () => {
       <div className="signup">
         <Input
           handleInput={handleInput}
+          initValue={inputs.title}
+          initValid={inputs.titleValid}
           name="title"
           valid="titleValid"
           lable="Title"
@@ -63,6 +68,8 @@ const AddPost = () => {
         />
         <Input
           handleInput={handleInput}
+          initValue={inputs.desc}
+          initValid={inputs.descValid}
           name="desc"
           valid="descValid"
           lable="Description"
@@ -76,7 +83,10 @@ const AddPost = () => {
           handleInput={handleInput}
           name="image"
           valid="imageValid"
+          initValue={inputs.image}
+          initValid={inputs.imageValid}
         />
+
         <Button onClick={submitInput}>Submit</Button>
       </div>
       <MyToast toast={toast} />

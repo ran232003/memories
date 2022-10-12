@@ -1,0 +1,10 @@
+.imagePrev {
+  height: 20%;
+  width: 20%;
+  margin-top: 5px;
+  border-radius: 10px;
+}
+.imageLoad {
+  display: flex;
+  flex-direction: column;
+}

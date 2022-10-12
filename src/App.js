@@ -42,6 +42,7 @@ function App() {
         <Route element={<PrivateRoutes />}>
           <Route path="/home" element={<HomePage />} />
           <Route path="/add-post" exact element={<AddPost />} />
+          <Route path="/edit/:title" exact element={<AddPost />} />
         </Route>
         <Route path="*" element={<PageNotFound />} />
       </Routes>
