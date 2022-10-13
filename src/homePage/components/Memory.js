@@ -33,7 +33,7 @@ const Memory = (props) => {
   };
   const handleDelete = async () => {
     let payload = { memoryId: id, userId: user._id };
-    dispatch(memoryAction.deletePost(payload));
+    // dispatch(memoryAction.deletePost(payload));
 
     const data = await deleteMemory(payload);
     if (data.status === "ok") {

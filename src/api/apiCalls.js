@@ -88,3 +88,40 @@ export const LikeMemory = async (payload) => {
   console.log("response", data);
   return data;
 };
+export const editPostNewImage = async (post) => {
+  const formData = new FormData();
+  formData.append("title", post.title);
+  formData.append("desc", post.desc);
+  formData.append("file", post.image);
+  formData.append("memoryId", post.memoryId);
+  const response = await fetch(
+    "http://localhost:5000/api/memory/editPostNewImage",
+    {
+      method: "POST",
+      body: formData,
+    }
+  );
+  // const response = await axios.post(
+  //   "http://localhost:5000/api/memory/addPost",
+  //   formData
+  // );
+
+  let data = await response.json();
+  console.log(data, "addPost");
+  return data;
+};
+export const editPostNoImage = async (payload) => {
+  const response = await fetch(
+    "http://localhost:5000/api/memory/editPostNoImage",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+  let data = await response.json();
+  console.log("response", data);
+  return data;
+};

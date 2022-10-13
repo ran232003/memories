@@ -114,7 +114,23 @@ const googleLogin = async (req, res, next) => {
     if (checkUser === null) {
       return res.json({ status: "fail", message: "User Not Exist" });
     } else {
-      return res.json({ status: "ok", message: "User Exist", user: checkUser });
+      token = jwt.sign(
+        { id: checkUser._id, email: checkUser.email },
+        "my-secret",
+        {
+          expiresIn: "1d",
+        }
+      );
+      let returnUser = {
+        id: checkUser["_id"],
+        email: checkUser["email"],
+        token: token,
+      };
+      return res.json({
+        status: "ok",
+        message: "User Exist",
+        user: returnUser,
+      });
     }
   } else {
     return res.json({ status: "fail", message: "Email Not Verified" });

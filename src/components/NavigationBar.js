@@ -29,17 +29,19 @@ const NavigationBar = (props) => {
       <Navbar.Collapse id="basic-navbar-nav">
         {user === null ? (
           <Nav className="me-auto">
-            <Nav.Link as={Link} to="/auth/signup">
+            <Nav.Link className="navLink" as={Link} to="/auth/signup">
               SignUp
             </Nav.Link>
-            <Nav.Link as={Link} to="/auth/login">
+            <Nav.Link className="navLink" as={Link} to="/auth/login">
               Login
             </Nav.Link>
           </Nav>
         ) : (
           <Nav className="me-auto">
-            <Nav.Link onClick={handleModal}>Logout</Nav.Link>
-            <Nav.Link as={Link} to="/add-post">
+            <Nav.Link className="navLink" onClick={handleModal}>
+              Logout
+            </Nav.Link>
+            <Nav.Link className="navLink" as={Link} to="/add-post">
               Add Post
             </Nav.Link>
           </Nav>

@@ -18,7 +18,6 @@ memorySchema = mongoose.Schema({
   },
   likes: [],
   image: String,
-  originalImage: {},
 });
 
 const Memory = mongoose.model("Memory", memorySchema);

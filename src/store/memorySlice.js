@@ -9,18 +9,19 @@ const MemorySlice = createSlice({
     addPost(state, action) {
       state.memories.push(action.payload);
     },
+    editPost(state, action) {
+      state.memories.find((mem, index) => {
+        if (mem._id == action.payload._id) {
+          state.memories[index] = action.payload;
+        }
+      });
+    },
     deletePost(state, action) {
       const { memoryId, userId } = action.payload;
       let newMemories = state.memories.filter((mem, index) => {
-        // console.log(mem.userId != userId, mem.userId, userId);
-        // console.log(mem.id != memoryId, mem._id, memoryId, index);
-        // return mem.userId != userId && mem._id != memoryId;
-        if (mem.userId == userId) {
-          if (mem._id != memoryId) {
-            return mem;
-          }
-        }
+        return memoryId !== mem._id;
       });
+      console.log(newMemories);
       state.memories = newMemories;
     },
     like(state, action) {

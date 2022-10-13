@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
-import { useLocation, useNavigate } from "react-router-dom";
-import { addPost } from "../../api/apiCalls";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
+import { addPost, editPostNewImage, editPostNoImage } from "../../api/apiCalls";
 import Headline from "../../components/Headline";
 import Input from "../../components/Input";
 import MyToast from "../../components/MyToast";
@@ -17,6 +17,9 @@ const AddPost = () => {
   });
   const navigate = useNavigate();
   const { state } = useLocation();
+  console.log(state);
+  let { title } = useParams();
+  console.log("title", title);
   const [toast, setToast] = useState({ show: false, bg: "", lable: "" });
   const [inputs, setInputs] = useState({
     title: state ? state.title : "",
@@ -34,19 +37,43 @@ const AddPost = () => {
     });
   };
   const submitInput = async () => {
-    const data = await addPost(inputs, user);
-    if (data.status === "ok") {
-      setToast({
-        show: true,
-        bg: "success",
-        lable: "Adding Post Was Successful",
-      });
-      dispatch(memoryAction.addPost(data.memory));
-      setTimeout(() => {
-        navigate("/home");
-      }, 1600);
+    if (title) {
+      let postData = { ...inputs, memoryId: state.id };
+      //edit post
+      let data;
+      if (typeof inputs.image === "string") {
+        console.log("no image");
+
+        data = await editPostNoImage(postData);
+      } else {
+        data = await editPostNewImage(postData);
+      }
+      if (data.status === "ok") {
+        setToast({
+          show: true,
+          bg: "success",
+          lable: "Update Success",
+        });
+        dispatch(memoryAction.editPost(data.memory));
+        setTimeout(() => {
+          navigate("/home");
+        }, 1600);
+      }
     } else {
-      setToast({ show: true, bg: "danger", lable: "Fail To Add Post" });
+      const data = await addPost(inputs, user);
+      if (data.status === "ok") {
+        setToast({
+          show: true,
+          bg: "success",
+          lable: "Adding Post Was Successful",
+        });
+        dispatch(memoryAction.addPost(data.memory));
+        setTimeout(() => {
+          navigate("/home");
+        }, 1600);
+      } else {
+        setToast({ show: true, bg: "danger", lable: "Fail To Add Post" });
+      }
     }
   };
   return (

@@ -14,7 +14,6 @@ const addPost = async (req, res, next) => {
       desc: req.body.desc,
       image: newImage,
       userId: req.body.userId,
-      originalImage: image,
     });
 
     await newMemory.save();
@@ -56,24 +55,50 @@ const LikeMemory = async (req, res, next) => {
     let checkUser = memory.likes.find((user) => {
       return user === userId;
     });
-    console.log(checkUser, "checkUser");
+    //console.log(checkUser, "checkUser");
     if (checkUser) {
+      console.log(memory, "memory before");
       // user allready liked the Memory, remove the like
       memory.likes = memory.likes.filter((user) => {
-        user !== userId;
+        return user !== userId;
       });
       await memory.save();
-      console.log(memory, "memory");
+      console.log(memory, "memory in if");
 
       res.json({ status: "ok", memory: memory });
     } else {
+      //add user to like array
       memory.likes.push(userId);
       await memory.save();
-      console.log(memory, "memory");
+      console.log(memory, "memory else");
       res.json({ status: "ok", memory: memory });
     }
   } catch (error) {
     console.log(error, "err");
+    res.json({ status: "fail" });
+  }
+};
+const editPost = async (req, res, next) => {
+  const { desc, title, memoryId } = req.body;
+  let image = req.file;
+  try {
+    if (!image) {
+      //no image
+      editMemory = await Memory.findById(memoryId);
+      editMemory.title = title;
+      editMemory.desc = desc;
+      await editMemory.save();
+      res.json({ status: "ok", memory: editMemory });
+    } else {
+      let newImage = "http://localhost:5000/" + image.path.replace(/\\/g, "/");
+      editMemory = await Memory.findById(memoryId);
+      editMemory.title = title;
+      editMemory.desc = desc;
+      editMemory.image = newImage;
+      await editMemory.save();
+      res.json({ status: "ok", memory: editMemory });
+    }
+  } catch (error) {
     res.json({ status: "fail" });
   }
 };
@@ -83,4 +108,5 @@ module.exports = {
   deleteMemory,
   getMemories,
   LikeMemory,
+  editPost,
 };

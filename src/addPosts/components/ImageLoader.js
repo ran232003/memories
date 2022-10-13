@@ -28,7 +28,7 @@ const ImageLoader = (props) => {
           alt="Thumb"
         />
       ) : (
-        <img className="imagePrev" src={file[name]} alt="Thumb" />
+        <img className="imagePrev" src={file[name]} alt=" Choose Image" />
       )}
     </div>
   );
