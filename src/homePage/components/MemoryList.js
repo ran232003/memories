@@ -9,7 +9,6 @@ const MemoryList = (props) => {
   const memories = useSelector((state) => {
     return state.memory.memories;
   });
-  console.log(memories);
   return (
     <div className="memoryList">
       {memories.map((mem) => {

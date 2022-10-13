@@ -14,7 +14,6 @@ const NavigationBar = (props) => {
   });
   let homePageLink = user === null ? "/" : "/home";
   const handleModal = () => {
-    console.log("show");
     setShow(true);
   };
   const handleCloseModal = (action) => {

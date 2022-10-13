@@ -13,8 +13,6 @@ const GoogleSign = (props) => {
   let test =
     "168119533642-j168btelnpc9q54ouqtff55qrutuarhv.apps.googleusercontent.com";
   const successGoogle = async (responseGoogle) => {
-    console.log(responseGoogle);
-    console.log(status);
     // console.log(responseGoogle.wt.Ad);
     let user = {
       email: responseGoogle.profileObj.email,
@@ -31,7 +29,6 @@ const GoogleSign = (props) => {
     }
     if (data.status === "ok") {
       setUser(data.user);
-      console.log("in if success");
       dispatch(authAction.setUser(data.user));
       navigate("/home");
       alert = { lable: data.message, cssClass: "danger", showAlert: true };
@@ -40,12 +37,8 @@ const GoogleSign = (props) => {
     }
     props.signWithGoogle(alert);
   };
-  const failGoogle = (responseGoogle) => {
-    console.log("faill", responseGoogle);
-  };
-  const logoutGoogle = (res) => {
-    console.log(res, "in logout");
-  };
+  const failGoogle = (responseGoogle) => {};
+  const logoutGoogle = (res) => {};
   return (
     <div>
       <GoogleLogin

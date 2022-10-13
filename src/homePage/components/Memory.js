@@ -21,13 +21,11 @@ const Memory = (props) => {
   });
   const dispatch = useDispatch();
   const like = async () => {
-    console.log("like", id, user.id);
     let payload = { memoryId: id, userId: user.id };
 
     const data = await LikeMemory(payload);
-    console.log("data.status", data.status);
+
     if (data.status === "ok") {
-      console.log("before", data.memory);
       dispatch(memoryAction.like(data.memory));
     }
   };
@@ -37,7 +35,6 @@ const Memory = (props) => {
 
     const data = await deleteMemory(payload);
     if (data.status === "ok") {
-      console.log("before", data.memory);
       dispatch(memoryAction.deletePost(payload));
     }
   };

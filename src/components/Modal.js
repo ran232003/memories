@@ -12,7 +12,6 @@ const MyModal = (props) => {
   const dispatch = useDispatch();
   const handleClose = (event) => {
     let action;
-    console.log(event);
     if (typeof event === "undefined" || event?.target?.innerHTML === "No") {
       action = "close";
     } else {

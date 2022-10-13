@@ -17,9 +17,7 @@ const AddPost = () => {
   });
   const navigate = useNavigate();
   const { state } = useLocation();
-  console.log(state);
   let { title } = useParams();
-  console.log("title", title);
   const [toast, setToast] = useState({ show: false, bg: "", lable: "" });
   const [inputs, setInputs] = useState({
     title: state ? state.title : "",
@@ -30,7 +28,6 @@ const AddPost = () => {
     imageValid: state ? true : false,
     likes: 0,
   });
-  console.log(inputs, "inputs");
   const handleInput = (input, name, valid) => {
     setInputs(() => {
       return { ...inputs, [name]: input[name], [valid]: input[valid] };
@@ -42,8 +39,6 @@ const AddPost = () => {
       //edit post
       let data;
       if (typeof inputs.image === "string") {
-        console.log("no image");
-
         data = await editPostNoImage(postData);
       } else {
         data = await editPostNewImage(postData);

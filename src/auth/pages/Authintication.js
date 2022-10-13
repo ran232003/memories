@@ -47,7 +47,6 @@ const Authintication = () => {
       navigate("/auth/login");
     }
   };
-  console.log(status);
   const submitInput = async () => {
     let user = {
       name: inputs.name,
@@ -55,11 +54,9 @@ const Authintication = () => {
       email: inputs.email,
     };
     let data = await signup(inputs, status);
-    console.log(data);
 
     if (data.status === "ok") {
       setUser(data.user);
-      console.log("in if success");
       dispatch(authAction.setUser(data.user));
       // navigate("/home");
       setToast({

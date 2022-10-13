@@ -52,7 +52,6 @@ export const addPost = async (post, user) => {
   // );
 
   let data = await response.json();
-  console.log(data, "addPost");
   return data;
 };
 export const getMemories = async () => {
@@ -73,7 +72,6 @@ export const deleteMemory = async (memoryId) => {
     }
   );
   let data = await response.json();
-  console.log("response", data);
   return data;
 };
 export const LikeMemory = async (payload) => {
@@ -85,7 +83,6 @@ export const LikeMemory = async (payload) => {
     body: JSON.stringify(payload),
   });
   let data = await response.json();
-  console.log("response", data);
   return data;
 };
 export const editPostNewImage = async (post) => {
@@ -107,7 +104,6 @@ export const editPostNewImage = async (post) => {
   // );
 
   let data = await response.json();
-  console.log(data, "addPost");
   return data;
 };
 export const editPostNoImage = async (payload) => {
@@ -122,6 +118,5 @@ export const editPostNoImage = async (payload) => {
     }
   );
   let data = await response.json();
-  console.log("response", data);
   return data;
 };

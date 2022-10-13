@@ -9,7 +9,6 @@ const HomePage = (props) => {
   const dispatch = useDispatch();
   const fetchMemories = async () => {
     const data = await getMemories();
-    console.log(data);
     dispatch(memoryAction.setMemories(data.memories));
   };
   fetchMemories();

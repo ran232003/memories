@@ -6,7 +6,6 @@ app.use(bodyParser.json());
 
 const addPost = async (req, res, next) => {
   try {
-    console.log(req.body, req.file, "test");
     let image = req.file;
     let newImage = "http://localhost:5000/" + image.path.replace(/\\/g, "/");
     let newMemory = new Memory({
@@ -20,7 +19,6 @@ const addPost = async (req, res, next) => {
 
     res.json({ status: "ok", memory: newMemory });
   } catch (error) {
-    console.log(error);
     res.json({ status: "fail", error: error });
   }
 };
@@ -33,10 +31,8 @@ const getMemories = async (req, res, next) => {
   }
 };
 const deleteMemory = async (req, res, next) => {
-  console.log("delete");
   try {
     let { memoryId } = req.body;
-    console.log(memoryId, req.body);
     // const memory = await Memory.findOneAndDelete({ id: memoryId });
     const memory = await Memory.findByIdAndDelete(memoryId);
     res.json({ status: "ok", memory: "memory" });
@@ -45,36 +41,29 @@ const deleteMemory = async (req, res, next) => {
   }
 };
 const LikeMemory = async (req, res, next) => {
-  console.log("like");
   try {
     let { memoryId, userId } = req.body;
-    console.log(memoryId, req.body);
     // const memory = await Memory.findOneAndDelete({ id: memoryId });
     let memory = await Memory.findById(memoryId);
-    console.log("mem", memory);
     let checkUser = memory.likes.find((user) => {
       return user === userId;
     });
     //console.log(checkUser, "checkUser");
     if (checkUser) {
-      console.log(memory, "memory before");
       // user allready liked the Memory, remove the like
       memory.likes = memory.likes.filter((user) => {
         return user !== userId;
       });
       await memory.save();
-      console.log(memory, "memory in if");
 
       res.json({ status: "ok", memory: memory });
     } else {
       //add user to like array
       memory.likes.push(userId);
       await memory.save();
-      console.log(memory, "memory else");
       res.json({ status: "ok", memory: memory });
     }
   } catch (error) {
-    console.log(error, "err");
     res.json({ status: "fail" });
   }
 };

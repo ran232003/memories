@@ -10,7 +10,6 @@ const ImageLoader = (props) => {
     setFile({ [valid]: true, [name]: event.target.files[0] });
     props.handleInput(obj, name, valid);
   };
-  console.log(file, file[name], file[valid]);
   return (
     <div className="imageLoad">
       <Form.Label>Choose File</Form.Label>
